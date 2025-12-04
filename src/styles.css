@@ -7,3 +7,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 html, body {
   scroll-behavior: smooth;
 }
+
+.nav-link {
+  @apply text-gray-700 font-medium hover:text-blue-600;
+}
+
+.active {
+  @apply text-blue-600 font-bold;
+}
+
+.mobile-profile-btn {
+  @apply text-left cursor-pointer;
+}
