@@ -1,0 +1,29 @@
+/* Navbar Styles */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* Ensure material icons are properly sized */
+.material-icons {
+  font-size: 1.25rem;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.mobile-profile-btn {
+  @apply text-left cursor-pointer;
+}
+
+.nav-link {
+  @apply text-gray-700 font-medium hover:text-blue-600;
+}
+
+.active {
+  @apply text-blue-600 font-bold;
+}
+

@@ -1,0 +1,35 @@
+/* Material Icons */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* Ensure proper spacing for the parking spot cards */
+.bg-blue-50 { background-color: #eff6ff; }
+.bg-green-50 { background-color: #f0fdf4; }
+.bg-purple-50 { background-color: #f5f3ff; }
+.bg-orange-50 { background-color: #fff7ed; }
+
+/* Improve button hover states */
+button:hover {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Ensure proper spacing for the feature cards */
+.rounded-xl {
+  border-radius: 1rem;
+}
+
+/* Make sure the material icons are properly aligned */
+.material-icons {
+  vertical-align: middle;
+  font-size: 1.25rem;
+}
+
+/* Responsive adjustments */@media (max-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .lg\:absolute {
+    position: relative;
+    width: 100%;
+  }
+}

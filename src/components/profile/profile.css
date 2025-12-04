@@ -1,0 +1,4 @@
+:host ::ng-deep .profile-popup-panel .mat-dialog-container {
+  padding: 0 !important;
+  border-radius: 1rem;
+}
