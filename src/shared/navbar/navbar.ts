@@ -3,7 +3,7 @@ import {NgIf} from '@angular/common';
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {filter, Subscription} from 'rxjs';
 import {MatIcon} from '@angular/material/icon';
-import {Auth} from '../../services/auth';
+import {Auth} from '../../services/auth/auth';
 import {Profile} from '../../components/profile/profile';
 import {MatDialog} from '@angular/material/dialog';
 

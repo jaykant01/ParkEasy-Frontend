@@ -19,3 +19,13 @@ html, body {
 .mobile-profile-btn {
   @apply text-left cursor-pointer;
 }
+
+.tag {
+  @apply inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1.5 text-xs rounded-full font-medium;
+}
+.btn-green {
+  @apply w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center transition;
+}
+.btn-blue {
+  @apply w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center transition;
+}

@@ -11,7 +11,7 @@
       <!-- Desktop Navigation -->
       <div class="hidden sm:flex items-center space-x-4" *ngIf="isLoggedIn">
         <a routerLink="/home" routerLinkActive="active" class="nav-link">Dashboard</a>
-        <a routerLink="/your-spaces" routerLinkActive="active" class="nav-link">Your Spaces</a>
+        <a routerLink="/my-spaces" routerLinkActive="active" class="nav-link">My Spaces</a>
 
         <!-- Profile Popup Trigger -->
         <button (click)="openProfilePopup()"
@@ -60,10 +60,10 @@
           Dashboard
         </a>
 
-        <a routerLink="/your-spaces"
+        <a routerLink="/my-spaces"
            class="block w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
            (click)="toggleMenu()">
-          Your Spaces
+          My Spaces
         </a>
 
         <button (click)="openProfilePopup()"

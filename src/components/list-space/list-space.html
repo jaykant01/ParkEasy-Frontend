@@ -1,0 +1,251 @@
+<!-- Breadcrumb + Header -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+  <p class="text-sm text-gray-500">
+    <a routerLink="/my-spaces" class="text-blue-600 font-medium">My Spaces</a> /
+    <span class="text-gray-700 font-medium">New Space</span>
+  </p>
+
+  <h1 class="mt-3 text-4xl font-extrabold text-gray-900">List Your Parking Space</h1>
+  <p class="text-gray-600 mt-2">Provide accurate details so users can easily find your space</p>
+</div>
+
+<div class="min-h-screen bg-gray-50 pb-20">
+
+  <form [formGroup]="spaceForm"
+        (ngSubmit)="onSubmit()"
+        class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 space-y-10">
+
+    <!-- ======================== BASIC INFO ======================== -->
+    <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-8">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Basic Information</h2>
+
+      <div class="space-y-6">
+
+        <!-- Space Name -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Space Name *</label>
+          <input formControlName="title"
+                 class="w-full h-14 px-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                 placeholder="e.g., Downtown Apartment Parking" />
+        </div>
+
+        <!-- Address -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Full Address *</label>
+          <input formControlName="address"
+                 class="w-full h-14 px-4 rounded-xl border border-gray-300"
+                 placeholder="123 Main Street" />
+        </div>
+
+        <!-- City & Zip -->
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+            <input formControlName="city"
+                   class="w-full h-14 px-4 rounded-xl border border-gray-300"
+                   placeholder="Mumbai" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Zip Code *</label>
+            <input formControlName="zip"
+                   class="w-full h-14 px-4 rounded-xl border border-gray-300"
+                   placeholder="400001" />
+          </div>
+        </div>
+
+        <!-- Latitude / Longitude -->
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Latitude *</label>
+            <input formControlName="latitude"
+                   class="w-full h-14 px-4 rounded-xl border border-gray-300"
+                   placeholder="Auto-detected…" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Longitude *</label>
+            <input formControlName="longitude"
+                   class="w-full h-14 px-4 rounded-xl border border-gray-300"
+                   placeholder="Auto-detected…" />
+          </div>
+        </div>
+
+        <button type="button"
+                (click)="getLocation()"
+                class="px-4 py-2 text-blue-600 border border-blue-600 rounded-xl hover:bg-blue-50 transition">
+          Use My Current Location
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ======================== PARKING DETAILS ======================== -->
+    <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-8">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Parking Details</h2>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+
+        <!-- Parking Type -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Parking Type *</label>
+          <select formControlName="parkingType"
+                  class="w-full h-14 px-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500">
+            <option value="">Select type</option>
+            <option value="GARAGE">Garage</option>
+            <option value="STREET">On Street</option>
+            <option value="LOT">Private Lot</option>
+            <option value="BASEMENT">Basement</option>
+          </select>
+        </div>
+
+        <!-- Vehicle Type -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Vehicle Type *</label>
+          <select formControlName="vehicleType"
+                  class="w-full h-14 px-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500">
+            <option value="">Select vehicle type</option>
+            <option value="CAR">Car</option>
+            <option value="BIKE">Bike</option>
+            <option value="SUV">SUV</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6 mt-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Total Parking Spaces *</label>
+          <input formControlName="totalSpaces"
+                 class="w-full h-14 px-4 rounded-xl border border-gray-300"
+                 placeholder="e.g., 5" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Hourly Rate (₹) *</label>
+          <input formControlName="pricePerHour"
+                 class="w-full h-14 px-4 rounded-xl border border-gray-300"
+                 placeholder="250" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== AVAILABILITY ======================== -->
+    <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-8">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Availability</h2>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <label *ngFor="let day of weekDays" class="flex items-center gap-2 text-gray-700">
+          <input type="checkbox"
+                 [value]="day"
+                 (change)="toggleDay(day)"
+                 class="h-4 w-4 text-blue-600">
+          {{ day }}
+        </label>
+      </div>
+    </div>
+
+    <!-- AMENITIES -->
+    <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-8">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Amenities</h2>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <label *ngFor="let a of amenitiesList; let i=index"
+               class="flex items-center gap-3 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 transition">
+
+          <input type="checkbox"
+                 [checked]="isAmenitySelected(a.name)"
+                 (change)="toggleAmenity(i)"
+                 class="h-5 w-5 text-blue-600 border-gray-300 rounded">
+
+          <span class="text-gray-700 font-medium">
+    {{ formatAmenity(a.name) }}
+  </span>
+
+        </label>
+      </div>
+    </div>
+
+
+
+    <!-- ======================== IMAGES ======================== -->
+    <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-8">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Images</h2>
+
+      <div (dragover)="onDragOver($event)"
+           (dragleave)="onDragLeave($event)"
+           (drop)="onDrop($event)"
+           [class.border-blue-400]="isDragging"
+           [class.bg-blue-50]="isDragging"
+           class="border-2 border-dashed border-gray-300 rounded-xl p-10 text-center cursor-pointer transition">
+
+        <input type="file"
+               id="upload"
+               multiple
+               accept="image/*"
+               class="hidden"
+               (change)="onFileSelected($event)" />
+
+        <label for="upload" class="cursor-pointer">
+          <i class="material-icons text-4xl text-blue-500">cloud_upload</i>
+          <p class="text-gray-600 mt-2">
+            <span class="font-medium text-blue-600">Click to upload</span>
+            or drag & drop
+          </p>
+        </label>
+      </div>
+
+      <!-- Preview -->
+      <div *ngIf="previews.length > 0" class="mt-6">
+        <h3 class="text-sm font-medium text-gray-700 mb-3">
+          Selected Images ({{ previews.length }})
+        </h3>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div *ngFor="let p of previews; let i=index"
+               class="relative group">
+            <img [src]="p"
+                 class="w-full h-32 object-cover rounded-xl border border-gray-200" />
+
+            <button type="button"
+                    (click)="removeImage(i)"
+                    class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
+              <i class="material-icons text-sm">close</i>
+            </button>
+
+            <span *ngIf="i === 0"
+                  class="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded">
+              Cover
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================== DESCRIPTION ======================== -->
+    <div class="bg-white rounded-2xl shadow-md border border-gray-200 p-8">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Description</h2>
+
+      <textarea formControlName="description"
+                class="w-full h-48 rounded-xl border border-gray-300 p-4 focus:ring-2 focus:ring-blue-500 resize-none"
+                placeholder="Describe your parking space, access instructions, special notes, etc."></textarea>
+    </div>
+
+    <!-- Submit Buttons -->
+    <div class="flex justify-end gap-4 pb-16">
+      <button type="button"
+              (click)="onCancel()"
+              class="px-6 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-100 transition">
+        Cancel
+      </button>
+
+      <button type="submit"
+              [disabled]="spaceForm.invalid || previews.length === 0"
+              class="px-6 py-3 rounded-xl bg-green-600 text-white hover:bg-green-700 transition flex items-center gap-2">
+        <i class="material-icons text-white">add</i>
+        List Your Space
+      </button>
+    </div>
+
+  </form>
+</div>
