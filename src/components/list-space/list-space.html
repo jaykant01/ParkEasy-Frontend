@@ -59,15 +59,19 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Latitude *</label>
             <input formControlName="latitude"
-                   class="w-full h-14 px-4 rounded-xl border border-gray-300"
+                   readonly
+                   class="w-full h-14 px-4 rounded-xl border border-gray-300 bg-gray-100 cursor-not-allowed"
                    placeholder="Auto-detected…" />
+
           </div>
 
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Longitude *</label>
             <input formControlName="longitude"
-                   class="w-full h-14 px-4 rounded-xl border border-gray-300"
+                   readonly
+                   class="w-full h-14 px-4 rounded-xl border border-gray-300 bg-gray-100 cursor-not-allowed"
                    placeholder="Auto-detected…" />
+
           </div>
         </div>
 
@@ -116,14 +120,14 @@
       <div class="grid sm:grid-cols-2 gap-6 mt-6">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Total Parking Spaces *</label>
-          <input formControlName="totalSpaces"
+          <input type="number" formControlName="totalSpaces"
                  class="w-full h-14 px-4 rounded-xl border border-gray-300"
                  placeholder="e.g., 5" />
         </div>
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Hourly Rate (₹) *</label>
-          <input formControlName="pricePerHour"
+          <input type="number" formControlName="pricePerHour"
                  class="w-full h-14 px-4 rounded-xl border border-gray-300"
                  placeholder="250" />
         </div>
@@ -154,8 +158,8 @@
                class="flex items-center gap-3 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 transition">
 
           <input type="checkbox"
-                 [checked]="isAmenitySelected(a.name)"
-                 (change)="toggleAmenity(i)"
+                 [checked]="selectedAmenities.includes(a.name)"
+                 (change)="toggleAmenity(a.name)"
                  class="h-5 w-5 text-blue-600 border-gray-300 rounded">
 
           <span class="text-gray-700 font-medium">
@@ -240,10 +244,10 @@
       </button>
 
       <button type="submit"
-              [disabled]="spaceForm.invalid || previews.length === 0"
+              [disabled]="isSubmitting || spaceForm.invalid || !spaceForm.value.latitude"
               class="px-6 py-3 rounded-xl bg-green-600 text-white hover:bg-green-700 transition flex items-center gap-2">
         <i class="material-icons text-white">add</i>
-        List Your Space
+        {{ isSubmitting ? 'Creating...' : 'List Your Space' }}
       </button>
     </div>
 

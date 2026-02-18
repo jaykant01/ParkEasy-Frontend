@@ -11,26 +11,14 @@ export class Parking {
   private readonly baseUrl = `${environment.apiUrl}/parking`;
 
   constructor(
-    private http: HttpClient,
-    private auth: Auth
+    private http: HttpClient
   ) {}
-
-  private authHeadersJson(): HttpHeaders {
-    return new HttpHeaders({
-      Authorization: `Bearer ${this.auth.getToken()}`,
-      'Content-Type': 'application/json'
-    });
-  }
 
   // STEP 1: Upload images → multipart/form-data
   uploadImages(formData: FormData): Observable<string[]> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.auth.getToken()}` // DO NOT SET Content-Type
-    });
     return this.http.post<string[]>(
       `${this.baseUrl}/upload-images`,
-      formData,
-      { headers }
+      formData
     );
   }
 
@@ -38,30 +26,40 @@ export class Parking {
   createParking(payload: any): Observable<any> {
     return this.http.post(
       `${this.baseUrl}/create`,
-      payload,
-      { headers: this.authHeadersJson() }
+      payload
     );
   }
 
   getMySpaces(): Observable<any> {
     return this.http.get(
-      `${this.baseUrl}/my-spaces`,
-      { headers: this.authHeadersJson() }
+      `${this.baseUrl}/my-spaces`
     );
   }
 
+  getSpaceById(id: number) {
+    return this.http.get(
+      `${this.baseUrl}/${id}`
+    );
+  }
+
+
   deleteSpace(id: number): Observable<any> {
     return this.http.delete(
-      `${this.baseUrl}/delete-space/${id}`,
-      { headers: this.authHeadersJson() }
+      `${this.baseUrl}/delete-space/${id}`
     );
   }
 
   updateSpace(id: number, payload: any): Observable<any> {
     return this.http.put(
       `${this.baseUrl}/edit-space/${id}`,
-      payload,
-      { headers: this.authHeadersJson() }
+      payload
     );
   }
+
+  findNearby(lat: number, lng: number, radiusKm: number = 3) {
+    return this.http.get<any[]>(
+      `${this.baseUrl}/nearby?lat=${lat}&lng=${lng}&radiusKm=${radiusKm}`
+    );
+  }
+
 }

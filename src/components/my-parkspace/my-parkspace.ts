@@ -31,6 +31,7 @@ export interface ParkingSpace {
 
 @Component({
   selector: 'app-my-parkspace',
+  standalone: true,
   imports: [
     RouterLink,
     NgForOf,
@@ -41,6 +42,7 @@ export interface ParkingSpace {
 })
 export class MyParkspace implements OnInit {
   spaces: ParkingSpace[] = [];
+  loading = false;
 
   constructor(
     private parkingService: Parking,
@@ -52,22 +54,28 @@ export class MyParkspace implements OnInit {
   }
 
   loadSpaces() {
+
+    this.loading = true;
+
     this.parkingService.getMySpaces().subscribe({
       next: (res: ParkingSpace[]) => {
-        this.spaces = res;
+
+        // Ensure arrays never null
+        this.spaces = res.map(space => ({
+          ...space,
+          amenities: space.amenities || [],
+          availableDays: space.availableDays || [],
+          imageUrls: space.imageUrls || []
+        }));
+
       },
       error: (err) => {
         console.error('Error loading spaces:', err);
+      },
+      complete: () => {
+        this.loading = false;
       }
     });
-  }
-
-  viewSpace(id: number) {
-    alert("View Space — Future Implementation");
-  }
-
-  openMap(space: ParkingSpace) {
-    alert("Map View is coming soon!");
   }
 
   editSpace(id: number) {
@@ -75,6 +83,7 @@ export class MyParkspace implements OnInit {
   }
 
   deleteSpace(id: number) {
+
     if (!confirm("Delete this space permanently?")) return;
 
     this.parkingService.deleteSpace(id).subscribe({
@@ -83,5 +92,13 @@ export class MyParkspace implements OnInit {
       },
       error: (err) => console.error("Delete failed:", err)
     });
+  }
+
+  openMap(space: ParkingSpace) {
+    alert("Map View coming soon 🚀");
+  }
+
+  viewSpace(id: number) {
+    alert("View Page coming soon 🚀");
   }
 }
