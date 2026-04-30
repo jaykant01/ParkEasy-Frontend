@@ -1,3 +1,5 @@
 export const environment = {
-  apiUrl: 'http://localhost:8080'
+  production: false,
+  apiUrl: 'http://localhost:8080',
+  googleAuthUrl: 'http://localhost:8080/oauth2/authorization/google'
 };
